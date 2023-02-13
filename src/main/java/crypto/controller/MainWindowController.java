@@ -5,6 +5,7 @@ import crypto.view.MainWindow;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -12,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 public class MainWindowController {
@@ -49,7 +52,7 @@ public class MainWindowController {
             String textEncrypted = "";
             try {
                 textEncrypted = crypto.encrypt(textToEncrypt);
-            } catch (InvalidKeySpecException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException invalidKeySpecException) {
+            } catch (InvalidKeySpecException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException invalidKeySpecException) {
                 invalidKeySpecException.printStackTrace();
             }
             mainWindow.getEncryptedText().setText(textEncrypted);
@@ -64,7 +67,7 @@ public class MainWindowController {
             String textDecrypted = "";
             try {
                 textDecrypted = crypto.decrypt(textToDecrypt);
-            } catch (InvalidKeySpecException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException invalidKeySpecException) {
+            } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException invalidKeySpecException) {
                 invalidKeySpecException.printStackTrace();
             }
             mainWindow.getDecryptedText().setText(textDecrypted);
